@@ -300,10 +300,10 @@ def compress_results():
     zip_name = f"result_{timestamp}.zip"
     try:
         with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
-            for root, _, files in os.walk("result"):
+            for root, _, files in os.walk("results"):
                 for file in files:
                     file_path = os.path.join(root, file)
-                    zipf.write(file_path, os.path.relpath(file_path, "result"))
+                    zipf.write(file_path, os.path.relpath(file_path, "results"))
         print(f"\n[INFO] 测试结果已压缩为 {zip_name}")
         return zip_name
     except Exception as e:
