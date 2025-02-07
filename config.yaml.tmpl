@@ -1,0 +1,85 @@
+global:
+  defaultDuration: "30s" # 如果接口未写 duration，就用这个
+  defaultVUs: 300 # 如果接口未写 vus，就用这个
+  http_timeout: "15s" # HTTP 请求超时时间
+  base_url: "http://bcs-api.bkdomain/bcsapi/v4"
+  global_token: "Bearer xxxx"
+
+  vars:
+    cluster_id: "BCS-K8S-00000"
+    project_code: "blueking"
+
+bkrepo:
+  url: "http://bkrepo.bkdomain/generic/blueking/bcs-test" # 只填写基础路径，不包含文件名
+  username: "admin"
+  password: "xxxxx"
+
+# 全局前置请求（执行一次）
+pre_requests:
+- name: "获取初始化项目的ProjectID"
+  path: "/bcsproject/v1/projects/{project_code}"
+  method: "GET"
+  extract:
+    project_id: "body.data.projectID" # 指明如何提取
+    project_name: "body.data.name"
+    project_desc: "body.data.description"
+
+- name: "获取初始化集群的 ClusterName"
+  path: "/clustermanager/v1/cluster/{cluster_id}"
+  method: "GET"
+  extract:
+    cluster_name: "body.data.clusterName"
+    cluster_desc: "body.data.description"
+
+# 全局后置请求（完成压测后执行）
+post_requests:
+- name: "还原项目信息"
+  path: "/bcsproject/v1/projects/{project_id}"
+  method: "PUT"
+  body: '{"name": "{project_name}", "description": "{project_desc}"}'
+
+- name: "还原集群信息"
+  path: "/clustermanager/v1/cluster/{cluster_id}"
+  method: "PUT"
+  body: '{"updater": "admin", "clusterName": "{cluster_name}", "description": "{cluster_desc}"}'
+
+# 正式测试接口
+endpoints:
+
+# Project Manager
+- name: "更新项目"
+  path: "/bcsproject/v1/projects/{project_id}"
+  method: "PUT"
+  body: '{"name": "test-k6", "updater": "admin", "description": "test-k6"}'
+- name: "获取原生命名空间列表"
+  path: "/bcsproject/v1/projects/{project_id}/clusters/{cluster_id}/native/namespaces"
+  method: "GET"
+- name: "查询业务列表"
+  path: "/bcsproject/v1/business?useBCS=true"
+  method: "GET"
+
+# Cluster Manager
+- name: "查询某个项目下的Cluster列表"
+  path: "/clustermanager/v1/projects/{project_id}/clusters"
+  method: "GET"
+- name: "查询Cluster列表"
+  path: "/clustermanager/v1/cluster"
+  method: "GET"
+- name: "查询Cluster"
+  path: "/clustermanager/v1/cluster/{cluster_id}"
+  method: "GET"
+- name: "更新Cluster"
+  path: "/clustermanager/v1/cluster/{cluster_id}"
+  method: "PUT"
+  body: '{"updater": "admin", "clusterName": "test-k6", "description": "test k6"}'
+- name: "查询集群下的所有master节点列表"
+  path: "/clustermanager/v1/cluster/{cluster_id}/master"
+  method: "GET"
+- name: "查询集群下的所有node节点列表"
+  path: "/clustermanager/v1/cluster/{cluster_id}/node"
+  method: "GET"
+
+# Cluster Resources
+- name: "集群Deployment列表"
+  path: "/clusterresources/v1/projects/{project_id}/clusters/{cluster_id}/namespaces/bcs-system/workloads/deployments"
+  method: "GET"
