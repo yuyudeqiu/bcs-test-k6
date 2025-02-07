@@ -33,9 +33,23 @@ def extract_value(response, rule):
         data = response.headers
     else:
         return None
-    for key in parts:
-        if isinstance(data, dict) and key in data:
-            data = data[key]
+    
+    for part in parts:
+        # 处理数组索引，例如: data[0]
+        array_match = re.match(r"(\w+)\[(\d+)\]", part)
+        if array_match:
+            key, index = array_match.groups()
+            if isinstance(data, dict) and key in data:
+                array_data = data[key]
+                if isinstance(array_data, list) and len(array_data) > int(index):
+                    data = array_data[int(index)]
+                else:
+                    return None
+            else:
+                return None
+        # 处理普通的字典key
+        elif isinstance(data, dict) and part in data:
+            data = data[part]
         else:
             return None
     return data
@@ -90,9 +104,14 @@ def do_pre_requests(pre_requests, global_config, global_vars):
                 timeout = int(str(global_config.get("http_timeout", "5s")).strip("s"))
             )
             resp.raise_for_status()
+            
+            # 添加调试信息
+            print(f"\n调试信息 - 前置请求: {pre.get('name', '')}")
+            print("Response 状态码:", resp.status_code)            
             if "extract" in pre:
                 for var_name, rule in pre["extract"].items():
                     val = extract_value(resp, rule)
+                    print(f"提取变量 {var_name} (规则: {rule}): {val}")
                     new_vars[var_name] = val
         except Exception as e:
             print(f"前置请求 [{pre.get('name', '')}] 失败:", e)

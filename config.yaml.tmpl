@@ -30,6 +30,12 @@ pre_requests:
   extract:
     cluster_name: "body.data.clusterName"
     cluster_desc: "body.data.description"
+- name: "获取集群组件列表"
+  path: "/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/addons"
+  method: "GET"
+  extract:
+    addons_name: "body.data[0].name"
+    addons_chart_name: "body.data[0].chartName"
 
 # 全局后置请求（完成压测后执行）
 post_requests:
@@ -65,6 +71,9 @@ endpoints:
 - name: "查询Cluster列表"
   path: "/clustermanager/v1/cluster"
   method: "GET"
+- name: "查询公共Cluster列表"
+  path: "/clustermanager/v1/sharedclusters?showVCluster=false"
+  method: "GET"
 - name: "查询Cluster"
   path: "/clustermanager/v1/cluster/{cluster_id}"
   method: "GET"
@@ -82,4 +91,24 @@ endpoints:
 # Cluster Resources
 - name: "集群Deployment列表"
   path: "/clusterresources/v1/projects/{project_id}/clusters/{cluster_id}/namespaces/bcs-system/workloads/deployments"
+  method: "GET"
+- name: "获取视图配置列表"
+  path: "/clusterresources/v1/projects/{project_code}/view_configs"
+  method: "GET"
+
+# Helm Manager
+- name: "查询仓库列表"
+  path: "/helmmanager/v1/projects/{project_code}/repos"
+  method: "GET"
+- name: "查询仓库详情"
+  path: "/helmmanager/v1/projects/{project_code}/repos/{project_code}"
+  method: "GET"
+- name: "批量查询chart包"
+  path: "/helmmanager/v1/projects/{project_code}/repos/{project_code}/charts?page=1&size=20"
+  method: "GET"
+- name: "获取集群组件列表"
+  path: "/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/addons"
+  method: "GET"
+- name: "查询指定集群的chart release信息"
+  path: "/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/releases?namespace=bcs-system&page=1&size=10"
   method: "GET"
