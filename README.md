@@ -57,6 +57,9 @@
 - 根据实际情况修改 `charts/values.yaml` 中的配置信息，如镜像配置、应用内部配置和资源配置等。
 
 ### 运行压测
+
+#### 本地运行
+
 - 以 `config.yaml.tmpl` 为模板修改配置并且命名为 `config.yaml`
   ```bash
   cp config.yaml.tmpl config.yaml
@@ -65,3 +68,21 @@
   ```bash
   python3 controller.py
   ```
+
+#### docker 运行
+
+- 在项目根目录下执行以下命令：
+   ```bash
+   docker build -t bcs-test-k6 .
+   ```
+
+- 运行镜像镜像进行压测
+
+   ```bash
+   docker run --rm -v $(pwd)/results:/app/results \
+   -e BCS_API_URL="http://bcs-api.bkdomain/bcsapi/v4" \
+   -e BCS_TOKEN="xxx" \
+   -e BKREPO_PASSWORD="xxx" \
+   -e BKREPO_URL="http://bkrepo.bkdomain/generic/xxx/xxx" \
+   bcs-test-k6
+   ```

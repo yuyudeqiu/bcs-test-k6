@@ -62,7 +62,6 @@ export function handleSummary(data) {
   let baseName = (__ENV.REPORT_NAME || `k6-summary-${Date.now()}`)
     .replace(/\.[^.]+$/, ''); // 删除任何现有扩展名
     
-    // 动态生成完整的文件名（避免重复扩展）
     return {
       stdout: textSummary(data, { indent: " ", enableColors: true }),
       

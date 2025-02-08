@@ -1,18 +1,18 @@
 global:
-  defaultDuration: "30s" # 如果接口未写 duration，就用这个
-  defaultVUs: 300 # 如果接口未写 vus，就用这个
-  http_timeout: "15s" # HTTP 请求超时时间
-  base_url: "http://bcs-api.bkdomain/bcsapi/v4"
-  global_token: "Bearer xxxx"
+  defaultDuration: "${DEFAULT_DURATION}"  # 如果接口未写 duration，就用这个
+  defaultVUs: ${DEFAULT_VUS}  # 如果接口未写 vus，就用这个
+  http_timeout: "${HTTP_TIMEOUT}"  # HTTP 请求超时时间
+  base_url: "${BCS_API_URL}"
+  global_token: "Bearer ${BCS_TOKEN}"
 
   vars:
-    cluster_id: "BCS-K8S-00000"
-    project_code: "blueking"
+    cluster_id: "${CLUSTER_ID}"
+    project_code: "${PROJECT_CODE}"
 
 bkrepo:
-  url: "http://bkrepo.bkdomain/generic/blueking/bcs-test" # 只填写基础路径，不包含文件名
-  username: "admin"
-  password: "xxxxx"
+  url: "${BKREPO_URL}"  # 只填写基础路径，不包含文件名
+  username: "${BKREPO_USERNAME}"
+  password: "${BKREPO_PASSWORD}"
 
 # 全局前置请求（执行一次）
 pre_requests:

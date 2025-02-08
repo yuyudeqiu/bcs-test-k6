@@ -15,8 +15,8 @@ build:
 
 init:
 	@if [ ! -f config.yaml ]; then \
-		cp config.yaml.tmpl config.yaml && \
-		echo "配置文件已初始化，请根据需要修改 config.yaml"; \
+		envsubst < config.yaml.tmpl > config.yaml && \
+		echo "配置文件已通过环境变量渲染完成，如需修改请设置对应环境变量或直接编辑 config.yaml"; \
 	else \
 		echo "配置文件 config.yaml 已存在，跳过初始化"; \
 	fi

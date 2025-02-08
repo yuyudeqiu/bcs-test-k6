@@ -10,3 +10,5 @@ result*.zip
 ._*
 
 config.yaml
+
+__pycache__/

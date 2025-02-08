@@ -10,6 +10,7 @@ import math
 import zipfile
 import base64
 from datetime import datetime
+from report_generator import save_results_to_html, format_bytes
 
 # 读取配置文件并返回解析后的对象
 def load_config():
@@ -206,78 +207,6 @@ def run_k6(ep, global_config, global_vars):
         print(f"接口 [{ep.get('name', '')}] 压测执行失败!")
     else:
         print(f"接口 [{ep.get('name', '')}] 压测完成")
-
-def format_bytes(num_bytes):
-    if num_bytes == 0:
-        return "0 B"
-    k = 1024
-    sizes = ["B", "KB", "MB", "GB", "TB"]
-    i = int(math.floor(math.log(num_bytes, k)))
-    return f"{num_bytes / (k ** i):.2f} {sizes[i]}"
-
-def save_results_to_html(final_results, file_path, global_config, global_vars, test_start, test_end, pre_count, post_count, k6_version):
-    summary_info = f"""
-    <h2>测试概要</h2>
-    <ul>
-      <li><strong>测试开始时间：</strong>{test_start.strftime("%Y-%m-%d %H:%M:%S")}</li>
-      <li><strong>测试结束时间：</strong>{test_end.strftime("%Y-%m-%d %H:%M:%S")}</li>
-      <li><strong>总测试时长：</strong>{str(test_end - test_start)}</li>
-      <li><strong>Base URL：</strong>{global_config.get("base_url", "")}</li>
-      <li><strong>默认 VUs：</strong>{global_config.get("defaultVUs", "")}</li>
-      <li><strong>默认接口测试持续时间：</strong>{global_config.get("defaultDuration", "")}</li>
-      <li><strong>HTTP Timeout：</strong>{global_config.get("http_timeout", "")}</li>
-      <li><strong>全局变量 (vars)：</strong><pre>{json.dumps(global_vars, indent=2, ensure_ascii=False)}</pre></li>
-      <li><strong>前置请求数量：</strong>{pre_count}</li>
-      <li><strong>压测接口数量：</strong>{len(final_results)}</li>
-      <li><strong>后置请求数量：</strong>{post_count}</li>
-      <li><strong>k6 版本：</strong>{k6_version}</li>
-    </ul>
-    <hr>
-    """
-    table_html = """<h2>压测结果</h2>
-  <table>
-    <tr>"""
-    # 获取所有表头
-    keys = list(final_results[0].keys()) if final_results else []
-    for key in keys:
-        table_html += f"<th>{key}</th>"
-    table_html += "</tr>"
-    
-    # 对每一行数据进行遍历
-    for result in final_results:
-        table_html += "<tr>"
-        for key in keys:
-            cell_value = result.get(key, '')
-            # 如果是 endpointName 列，则制作成超链接
-            if key == "endpointName":
-                # 构造 JSON 文件的相对路径
-                # 为了防止特殊字符问题，可以用 urllib.parse.quote 进行编码（这里示例简单拼接）
-                html_file = f"k6-summary-{cell_value}.html"
-                cell_value = f'<a href="{html_file}" target="_blank">{cell_value}</a>'
-            table_html += f"<td>{cell_value}</td>"
-        table_html += "</tr>"
-    table_html += "</table>"
-    
-    html_content = f"""<html>
-<head>
-  <meta charset="UTF-8">
-  <title>压测结果报告</title>
-  <style>
-    body {{ font-family: Arial, sans-serif; }}
-    table {{ border-collapse: collapse; width: 100%; margin-top: 20px; }}
-    th, td {{ border: 1px solid #ccc; padding: 8px; text-align: center; }}
-    th {{ background-color: #f2f2f2; }}
-    pre {{ background-color: #f9f9f9; padding: 8px; border: 1px solid #ddd; }}
-  </style>
-</head>
-<body>
-  {summary_info}
-  {table_html}
-</body>
-</html>"""
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(html_content)
-    print(f"测试结果已保存到 HTML 文件：{file_path}")
 
 # 修改后的汇总函数，除了汇总表格外传递测试概要参数
 def gather_results_and_print_report(endpoints, global_config, global_vars, test_start, test_end, pre_count, post_count, k6_version):
