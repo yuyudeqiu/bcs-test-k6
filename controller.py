@@ -112,9 +112,13 @@ def do_pre_requests(pre_requests, global_config, global_vars):
                 for var_name, rule in pre["extract"].items():
                     val = extract_value(resp, rule)
                     print(f"提取变量 {var_name} (规则: {rule}): {val}")
+                    if val is None:  # 如果提取变量失败
+                        print(f"[ERROR] 前置请求 [{pre.get('name', '')}] 提取变量 {var_name} 失败")
+                        return None
                     new_vars[var_name] = val
         except Exception as e:
-            print(f"前置请求 [{pre.get('name', '')}] 失败:", e)
+            print(f"[ERROR] 前置请求 [{pre.get('name', '')}] 失败:", e)
+            return None
     return new_vars
 
 def do_post_requests(post_requests, global_config, global_vars):
@@ -248,8 +252,8 @@ def save_results_to_html(final_results, file_path, global_config, global_vars, t
             if key == "endpointName":
                 # 构造 JSON 文件的相对路径
                 # 为了防止特殊字符问题，可以用 urllib.parse.quote 进行编码（这里示例简单拼接）
-                json_file = f"k6-summary-{cell_value}.json"
-                cell_value = f'<a href="{json_file}" target="_blank">{cell_value}</a>'
+                html_file = f"k6-summary-{cell_value}.html"
+                cell_value = f'<a href="{html_file}" target="_blank">{cell_value}</a>'
             table_html += f"<td>{cell_value}</td>"
         table_html += "</tr>"
     table_html += "</table>"
@@ -373,6 +377,10 @@ def main():
     
     print("\n===== 执行全局前置请求... =====\n")
     pre_vars = do_pre_requests(pre_requests, global_config, global_vars)
+    if pre_vars is None:  # 前置请求失败
+        print("[ERROR] 前置请求失败，程序退出")
+        sys.exit(1)
+    
     global_vars.update(pre_vars)
     print("前置请求和配置获取到的变量 globalVars =", global_vars)
     

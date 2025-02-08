@@ -2,6 +2,7 @@
 
 import http from "k6/http";
 import { check } from "k6";
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
 // 1. 定义 k6 配置选项
@@ -57,14 +58,18 @@ export default function () {
 
 // 3. handleSummary: 测试结束后输出报告
 export function handleSummary(data) {
-  // 这里 data 是 k6 的测试结果对象，包含指标
-  let filename = __ENV.REPORT_NAME || `k6-summary-${Date.now()}.json`;
-
-  return {
-    // 在控制台打印简要结果
-    stdout: textSummary(data, { indent: " ", enableColors: true }),
-
-    // 生成一个 JSON 文件，包含详细指标
-    [filename]: JSON.stringify(data, null, 2),
-  };
+  // 提取基础文件名（去除已有扩展名）
+  let baseName = (__ENV.REPORT_NAME || `k6-summary-${Date.now()}`)
+    .replace(/\.[^.]+$/, ''); // 删除任何现有扩展名
+    
+    // 动态生成完整的文件名（避免重复扩展）
+    return {
+      stdout: textSummary(data, { indent: " ", enableColors: true }),
+      
+      // 固定扩展名强制为.json
+      [`${baseName}.json`]: JSON.stringify(data, null, 2),
+      
+      // HTML扩展名根据类型自动附加
+      [`${baseName}.html`]: htmlReport(data)
+    };
 }

@@ -36,6 +36,11 @@ pre_requests:
   extract:
     addons_name: "body.data[0].name"
     addons_chart_name: "body.data[0].chartName"
+- name: "获取用户信息"
+  path: "/usermanager/v1/users/info"
+  method: "GET"
+  extract:
+    username: "body.data.username"
 
 # 全局后置请求（完成压测后执行）
 post_requests:
@@ -87,6 +92,9 @@ endpoints:
 - name: "查询集群下的所有node节点列表"
   path: "/clustermanager/v1/cluster/{cluster_id}/node"
   method: "GET"
+- name: "查询NodeGroup列表"
+  path: "/clustermanager/v1/nodegroup?clusterID={cluster_id}&projectID={project_id}"
+  method: "GET"
 
 # Cluster Resources
 - name: "集群Deployment列表"
@@ -109,6 +117,23 @@ endpoints:
 - name: "获取集群组件列表"
   path: "/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/addons"
   method: "GET"
+- name: "获取集群组件详情"
+  path: "/helmmanager/v1/projects/blueking/clusters/BCS-K8S-00000/addons/{addons_name}"
+  method: "GET"
 - name: "查询指定集群的chart release信息"
   path: "/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/releases?namespace=bcs-system&page=1&size=10"
+  method: "GET"
+
+# User Manager
+- name: "获取当前用户信息"
+  path: "/usermanager/v1/users/info"
+  method: "GET"
+- name: "获取用户token"
+  path: "/usermanager/v1/users/{username}/tokens"
+  method: "GET"
+
+# BCS Storage
+
+- name: "批量查询集群资源"
+  path: "/storage/k8s/dynamic/all_resources/clusters/{cluster_id}/Pod"
   method: "GET"
