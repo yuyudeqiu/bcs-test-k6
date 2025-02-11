@@ -1,10 +1,11 @@
-.PHONY: run build init help
+.PHONY: run build init help clean
 
 help:
 	@echo "Usage:"
 	@echo "  make run    - 运行压测"
 	@echo "  make build  - 构建Docker镜像"
 	@echo "  make init   - 初始化配置文件"
+	@echo "  make clean  - 清理压测结果和临时文件"
 	@echo "  make help   - 显示帮助信息"
 
 run:
@@ -22,3 +23,8 @@ init:
 	fi
 	@pip install -r requirements.txt
 	@echo "Python依赖已安装完成"
+
+clean:
+	@rm -rf results
+	@rm -f *.zip
+	@echo "已清理压测结果和临时文件"
