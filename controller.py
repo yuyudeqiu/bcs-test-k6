@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 import os
+import sys
 import time
 import yaml
 import json
 import subprocess
 import requests
 import re
-import math
 import zipfile
 import base64
 from datetime import datetime
@@ -211,6 +211,9 @@ def run_k6(ep, global_config, global_vars):
 # 修改后的汇总函数，除了汇总表格外传递测试概要参数
 def gather_results_and_print_report(endpoints, global_config, global_vars, test_start, test_end, pre_count, post_count, k6_version):
     final_results = []
+    total_success = 0
+    total_requests = 0
+    
     for ep in endpoints:
         summary_file = f"results/k6-summary-{ep.get('name', 'unknown')}.json"
         if not os.path.exists(summary_file):
@@ -226,6 +229,9 @@ def gather_results_and_print_report(endpoints, global_config, global_vars, test_
         test_duration_sec = state.get("testRunDurationMs", 30000) / 1000  # 默认 30s
         real_qps = success_count / test_duration_sec if test_duration_sec > 0 else 0
 
+        # 计算单个接口成功率
+        success_rate = (success_count / total_requests * 100) if total_requests > 0 else 0
+        
         final_results.append({
             "endpointName": ep.get("name", ""),
             "vus": ep.get("vus", global_config.get("defaultVUs", 1)),
@@ -234,6 +240,7 @@ def gather_results_and_print_report(endpoints, global_config, global_vars, test_
             "totalRequests": total_requests,
             "successCount": success_count,
             "failCount": fail_count,
+            "successRate": f"{success_rate:.2f}%",
             "avgDuration": f"{metrics['http_req_duration']['values']['avg']:.2f}",
             "p90Duration": f"{metrics['http_req_duration']['values']['p(90)']:.2f}",
             "p95Duration": f"{metrics['http_req_duration']['values']['p(95)']:.2f}",
@@ -241,6 +248,13 @@ def gather_results_and_print_report(endpoints, global_config, global_vars, test_
             "dataReceived": format_bytes(metrics['data_received']['values']['count']),
             "dataSent": format_bytes(metrics['data_sent']['values']['count']),
         })
+        
+        # 累加总数据
+        total_success += success_count
+        total_requests += total_requests
+    
+    # 计算全局成功率
+    global_success_rate = (total_success / total_requests * 100) if total_requests > 0 else 0
 
     print("\n======= 测试汇总结果 =======")
     for result in final_results:

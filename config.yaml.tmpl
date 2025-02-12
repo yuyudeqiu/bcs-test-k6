@@ -133,7 +133,17 @@ endpoints:
   method: "GET"
 
 # BCS Storage
-
-- name: "批量查询集群资源"
-  path: "/storage/k8s/dynamic/all_resources/clusters/{cluster_id}/Pod"
+# storage 除了 /events 的接口，其他接口目前都需要使用 admin 用户的 api token 才能访问
+# - name: "批量查询集群资源"
+#   path: "/storage/k8s/dynamic/all_resources/clusters/{cluster_id}/Pod"
+#   method: "GET"
+#   headers:
+#     Authorization: ""
+#- name: "查询某个集群资源(Pod)"
+#  path: "/storage/query/k8s/dynamic/clusters/{cluster_id}/pod?namespace=bcs-system&offset=0&limit=5"
+#  method: "GET"
+#  headers:
+#    Authorization: ""
+- name: "查询事件"
+  path: "/storage/events?env=k8s&clusterId={cluster_id}&offset=1&length=5"
   method: "GET"

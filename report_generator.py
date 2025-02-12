@@ -30,6 +30,12 @@ def save_results_to_html(final_results, file_path, global_config, global_vars, t
       </div>
       
       <div class="box metricbox">
+        <i class="fas fa-percentage icon"></i>
+        <h4>Success Rate</h4>
+        <div class="bignum">{(total_requests - total_failures)/total_requests*100:.2f}%</div>
+      </div>
+      
+      <div class="box metricbox">
         <i class="fas fa-clock icon"></i>
         <h4>Test Duration</h4>
         <div class="bignum">{str(test_end - test_start).split('.')[0]}</div>
@@ -71,7 +77,7 @@ def save_results_to_html(final_results, file_path, global_config, global_vars, t
     for result in final_results:
         results_tab += "<tr>"
         for key in keys:
-            cell_value = result.get(key, '')
+            cell_value = result.get(key, 'N/A')
             if key == "endpointName":
                 html_file = f"k6-summary-{cell_value}.html"
                 cell_value = f'<a href="{html_file}" target="_blank">{cell_value}</a>'
