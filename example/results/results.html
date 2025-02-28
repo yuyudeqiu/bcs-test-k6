@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>K6 Load Test Summary: 2025-02-28 13:40</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
+    <style>
+        body { margin: 1rem; font-family: Arial, sans-serif; }
+        .row { display: flex; flex-wrap: wrap; }
+        .box {
+            flex: 1;
+            border-radius: 0.3rem;
+            background-color: #3abe3a;
+            margin: 1rem;
+            padding: 1rem;
+            color: white;
+            position: relative;
+            min-width: 200px;
+            box-shadow: 0px 4px 7px -1px rgba(0,0,0,0.49);
+        }
+        .failed { background-color: #ff6666 !important; }
+        .metricbox { background-color: #5697e2; }
+        .box h4 {
+            margin: 0;
+            padding-bottom: 0.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        .bignum {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .icon {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255,255,255,0.2);
+            font-size: 4rem;
+            z-index: 0;
+        }
+        .tabs {
+            margin-top: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .tab-buttons {
+            background: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+            padding: 0.5rem;
+        }
+        .tab-buttons button {
+            border: none;
+            background: none;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .tab-buttons button.active {
+            border-bottom: 2px solid #4a90e2;
+            color: #4a90e2;
+        }
+        .tab { padding: 1rem; }
+        table { margin: 1rem 0; width: 100%; }
+        th { background: #f2f2f2; }
+        td, th { padding: 0.5rem; text-align: left; }
+        a { color: #4a90e2; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>
+        <i class="fas fa-chart-line"></i>
+        K6 Load Test Summary: 2025-02-28 13:40
+    </h1>
+    
+    
+    <div class="row">
+      <div class="box">
+        <i class="fas fa-globe icon"></i>
+        <h4>Total Requests</h4>
+        <div class="bignum">192594</div>
+      </div>
+      
+      <div class="box failed">
+        <i class="far fa-times-circle icon"></i>
+        <h4>Failed Requests</h4>
+        <div class="bignum">1047</div>
+      </div>
+      
+      <div class="box metricbox">
+        <i class="fas fa-percentage icon"></i>
+        <h4>Success Rate</h4>
+        <div class="bignum">99.46%</div>
+      </div>
+      
+      <div class="box metricbox">
+        <i class="fas fa-clock icon"></i>
+        <h4>Test Duration</h4>
+        <div class="bignum">0:12:36</div>
+      </div>
+    </div>
+    
+    
+    <div class="tabs">
+        <div class="tab-buttons">
+            <button onclick="openTab('summary')" class="active">Summary</button>
+            <button onclick="openTab('results')">Detailed Results</button>
+        </div>
+        
+        <div id="summary" class="tab-content">
+            
+    <div class="tab">
+      <h2>Test Summary</h2>
+      <table class="pure-table pure-table-striped">
+        <tr><td><b>Start Time</b></td><td>2025-02-28 13:40:40</td></tr>
+        <tr><td><b>End Time</b></td><td>2025-02-28 13:53:16</td></tr>
+        <tr><td><b>Base URL</b></td><td>http://bcs-api.bkee5-ipv6.bkcanway.com/bcsapi/v4</td></tr>
+        <tr><td><b>Default VUs</b></td><td>300</td></tr>
+        <tr><td><b>HTTP Timeout</b></td><td>15s</td></tr>
+        <tr><td><b>Pre Requests</b></td><td>4</td></tr>
+        <tr><td><b>Test Endpoints</b></td><td>21</td></tr>
+        <tr><td><b>Post Requests</b></td><td>2</td></tr>
+        <tr><td><b>K6 Version</b></td><td>k6 v0.56.0 (go1.23.4, darwin/arm64)</td></tr>
+      </table>
+    </div>
+    
+        </div>
+        
+        <div id="results" class="tab-content" style="display:none">
+            <div class="tab">
+      <h2>Detailed Results</h2>
+      <table class="pure-table pure-table-striped">
+        <thead>
+          <tr>
+    <th>endpointName</th><th>vus</th><th>testDuration</th><th>qps</th><th>totalRequests</th><th>successCount</th><th>failCount</th><th>successRate</th><th>avgDuration</th><th>p90Duration</th><th>p95Duration</th><th>maxDuration</th><th>dataReceived</th><th>dataSent</th><th>path</th></tr></thead><tbody><tr><td><a href="details/k6-summary-更新项目.html" target="_blank">更新项目</a></td><td>300</td><td>30.02s</td><td>174.94</td><td>5251</td><td>5251</td><td>0</td><td>100.00%</td><td>1664.06</td><td>2542.93</td><td>4453.41</td><td>5519.73</td><td>4.41 MB</td><td>1.60 MB</td><td>/bcsproject/v1/projects/{project_id}</td></tr><tr><td><a href="details/k6-summary-获取原生命名空间列表.html" target="_blank">获取原生命名空间列表</a></td><td>300</td><td>30.01s</td><td>22.83</td><td>805</td><td>685</td><td>120</td><td>85.09%</td><td>9523.88</td><td>14867.30</td><td>14873.41</td><td>14886.47</td><td>25.53 MB</td><td>279.49 KB</td><td>/bcsproject/v1/projects/{project_id}/clusters/{cluster_id}/native/namespaces</td></tr><tr><td><a href="details/k6-summary-查询业务列表.html" target="_blank">查询业务列表</a></td><td>300</td><td>30.01s</td><td>116.57</td><td>3498</td><td>3498</td><td>0</td><td>100.00%</td><td>2179.20</td><td>10022.59</td><td>10049.12</td><td>11973.04</td><td>2.12 MB</td><td>730.67 KB</td><td>/bcsproject/v1/business?useBCS=true</td></tr><tr><td><a href="details/k6-summary-查询某个项目下的Cluster列表.html" target="_blank">查询某个项目下的Cluster列表</a></td><td>300</td><td>30.01s</td><td>98.03</td><td>2942</td><td>2942</td><td>0</td><td>100.00%</td><td>2775.89</td><td>4206.28</td><td>4783.32</td><td>6202.12</td><td>18.40 MB</td><td>731.35 KB</td><td>/clustermanager/v1/projects/{project_id}/clusters</td></tr><tr><td><a href="details/k6-summary-查询Cluster列表.html" target="_blank">查询Cluster列表</a></td><td>300</td><td>30.01s</td><td>127.59</td><td>3829</td><td>3829</td><td>0</td><td>100.00%</td><td>2280.95</td><td>3221.86</td><td>3705.10</td><td>4913.00</td><td>23.05 MB</td><td>758.06 KB</td><td>/clustermanager/v1/cluster</td></tr><tr><td><a href="details/k6-summary-查询公共Cluster列表.html" target="_blank">查询公共Cluster列表</a></td><td>300</td><td>30.01s</td><td>593.67</td><td>17816</td><td>17816</td><td>0</td><td>100.00%</td><td>498.66</td><td>737.37</td><td>897.71</td><td>2650.62</td><td>8.85 MB</td><td>3.70 MB</td><td>/clustermanager/v1/sharedclusters?showVCluster=false</td></tr><tr><td><a href="details/k6-summary-查询Cluster.html" target="_blank">查询Cluster</a></td><td>300</td><td>30.01s</td><td>280.23</td><td>8409</td><td>8409</td><td>0</td><td>100.00%</td><td>1052.39</td><td>1472.70</td><td>1707.19</td><td>3306.70</td><td>22.54 MB</td><td>1.68 MB</td><td>/clustermanager/v1/cluster/{cluster_id}</td></tr><tr><td><a href="details/k6-summary-更新Cluster.html" target="_blank">更新Cluster</a></td><td>300</td><td>30.01s</td><td>100.76</td><td>3024</td><td>3024</td><td>0</td><td>100.00%</td><td>2812.90</td><td>4303.88</td><td>4684.43</td><td>5816.56</td><td>1.51 MB</td><td>954.35 KB</td><td>/clustermanager/v1/cluster/{cluster_id}</td></tr><tr><td><a href="details/k6-summary-查询集群下的所有master节点列表.html" target="_blank">查询集群下的所有master节点列表</a></td><td>300</td><td>30.01s</td><td>21.33</td><td>667</td><td>640</td><td>27</td><td>95.95%</td><td>10268.96</td><td>13911.08</td><td>14819.74</td><td>15007.46</td><td>1.00 MB</td><td>197.37 KB</td><td>/clustermanager/v1/cluster/{cluster_id}/master</td></tr><tr><td><a href="details/k6-summary-查询集群下的所有node节点列表.html" target="_blank">查询集群下的所有node节点列表</a></td><td>300</td><td>30.01s</td><td>18.13</td><td>616</td><td>544</td><td>72</td><td>88.31%</td><td>11179.77</td><td>14858.89</td><td>14966.55</td><td>15024.24</td><td>21.76 MB</td><td>185.17 KB</td><td>/clustermanager/v1/cluster/{cluster_id}/node</td></tr><tr><td><a href="details/k6-summary-查询NodeGroup列表.html" target="_blank">查询NodeGroup列表</a></td><td>300</td><td>30.01s</td><td>604.62</td><td>18147</td><td>18147</td><td>0</td><td>100.00%</td><td>488.96</td><td>806.11</td><td>1074.71</td><td>2965.22</td><td>8.62 MB</td><td>4.52 MB</td><td>/clustermanager/v1/nodegroup?clusterID={cluster_id}&projectID={project_id}</td></tr><tr><td><a href="details/k6-summary-集群Deployment列表.html" target="_blank">集群Deployment列表</a></td><td>300</td><td>30.00s</td><td>0.00</td><td>300</td><td>0</td><td>300</td><td>0.00%</td><td>14967.25</td><td>14987.83</td><td>14992.47</td><td>14998.59</td><td>0 B</td><td>170.51 KB</td><td>/clusterresources/v1/projects/{project_id}/clusters/{cluster_id}/namespaces/bcs-system/workloads/deployments</td></tr><tr><td><a href="details/k6-summary-获取视图配置列表.html" target="_blank">获取视图配置列表</a></td><td>300</td><td>30.01s</td><td>283.66</td><td>8513</td><td>8513</td><td>0</td><td>100.00%</td><td>1035.34</td><td>1670.27</td><td>2398.82</td><td>6514.99</td><td>4.46 MB</td><td>1.79 MB</td><td>/clusterresources/v1/projects/{project_code}/view_configs</td></tr><tr><td><a href="details/k6-summary-查询仓库列表.html" target="_blank">查询仓库列表</a></td><td>300</td><td>30.01s</td><td>1265.05</td><td>37960</td><td>37960</td><td>0</td><td>100.00%</td><td>235.73</td><td>404.59</td><td>501.54</td><td>2284.81</td><td>51.01 MB</td><td>7.33 MB</td><td>/helmmanager/v1/projects/{project_code}/repos</td></tr><tr><td><a href="details/k6-summary-查询仓库详情.html" target="_blank">查询仓库详情</a></td><td>300</td><td>30.00s</td><td>1285.36</td><td>38566</td><td>38566</td><td>0</td><td>100.00%</td><td>232.04</td><td>417.13</td><td>607.31</td><td>3027.13</td><td>36.56 MB</td><td>7.78 MB</td><td>/helmmanager/v1/projects/{project_code}/repos/{project_code}</td></tr><tr><td><a href="details/k6-summary-批量查询chart包.html" target="_blank">批量查询chart包</a></td><td>300</td><td>30.01s</td><td>50.49</td><td>1515</td><td>1515</td><td>0</td><td>100.00%</td><td>5321.94</td><td>7127.29</td><td>7309.05</td><td>8786.91</td><td>12.44 MB</td><td>411.21 KB</td><td>/helmmanager/v1/projects/{project_code}/repos/{project_code}/charts?page=1&size=20</td></tr><tr><td><a href="details/k6-summary-获取集群组件列表.html" target="_blank">获取集群组件列表</a></td><td>300</td><td>30.04s</td><td>0.47</td><td>314</td><td>14</td><td>300</td><td>4.46%</td><td>14749.49</td><td>14987.59</td><td>14994.64</td><td>15009.30</td><td>77.91 KB</td><td>134.91 KB</td><td>/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/addons</td></tr><tr><td><a href="details/k6-summary-获取集群组件详情.html" target="_blank">获取集群组件详情</a></td><td>300</td><td>30.01s</td><td>193.19</td><td>5797</td><td>5797</td><td>0</td><td>100.00%</td><td>1511.93</td><td>1940.26</td><td>2339.97</td><td>3506.52</td><td>5.35 MB</td><td>1.41 MB</td><td>/helmmanager/v1/projects/blueking/clusters/BCS-K8S-00000/addons/{addons_name}</td></tr><tr><td><a href="details/k6-summary-查询指定集群的chart release信息.html" target="_blank">查询指定集群的chart release信息</a></td><td>300</td><td>30.01s</td><td>13.56</td><td>635</td><td>407</td><td>228</td><td>64.09%</td><td>11092.29</td><td>15001.48</td><td>15002.07</td><td>15017.28</td><td>843.41 KB</td><td>240.14 KB</td><td>/helmmanager/v1/projects/{project_code}/clusters/{cluster_id}/releases?namespace=bcs-system&page=1&size=10</td></tr><tr><td><a href="details/k6-summary-获取当前用户信息.html" target="_blank">获取当前用户信息</a></td><td>300</td><td>30.01s</td><td>700.90</td><td>21031</td><td>21031</td><td>0</td><td>100.00%</td><td>421.89</td><td>901.86</td><td>1260.92</td><td>3915.68</td><td>9.99 MB</td><td>3.82 MB</td><td>/usermanager/v1/users/info</td></tr><tr><td><a href="details/k6-summary-获取用户token.html" target="_blank">获取用户token</a></td><td>300</td><td>30.00s</td><td>431.90</td><td>12959</td><td>12959</td><td>0</td><td>100.00%</td><td>687.97</td><td>1318.15</td><td>1882.13</td><td>5010.49</td><td>6.61 MB</td><td>2.51 MB</td><td>/usermanager/v1/users/{username}/tokens</td></tr></tbody></table></div>
+        </div>
+    </div>
+
+    <script>
+    function openTab(tabName) {
+        var i, tabContent, tabButtons;
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        tabButtons = document.getElementsByClassName("tab-buttons")[0].getElementsByTagName("button");
+        for (i = 0; i < tabButtons.length; i++) {
+            tabButtons[i].className = tabButtons[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        event.currentTarget.className += " active";
+    }
+    </script>
+</body>
+</html>
