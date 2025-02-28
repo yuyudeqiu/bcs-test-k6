@@ -1,5 +1,5 @@
 # Ignore the results directory and any zip files starting with "result"
-results/
+/results
 result*.zip
 # Ignore macOS generated files
 .DS_Store

@@ -86,3 +86,8 @@
    -e BKREPO_URL="http://bkrepo.bkdomain/generic/xxx/xxx" \
    bcs-test-k6
    ```
+
+## 压测结果
+
+以下提供一个压测结果示例：
+

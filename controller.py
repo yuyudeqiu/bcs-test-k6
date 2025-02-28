@@ -198,7 +198,7 @@ def run_k6(ep, global_config, global_vars):
         "BODY": json.dumps(final_body) if final_body else "",
         "VUS": str(ep.get("vus", global_config.get("defaultVUs", 1))),
         "DURATION": ep.get("duration", global_config.get("defaultDuration", "30s")),
-        "REPORT_NAME": f"results/k6-summary-{ep.get('name', 'unknown')}.json",
+        "REPORT_NAME": f"results/details/k6-summary-{ep.get('name', 'unknown')}.json",
         "TIMEOUT": global_config.get("http_timeout", "5s")
     })
     
@@ -215,7 +215,7 @@ def gather_results_and_print_report(endpoints, global_config, global_vars, test_
     total_requests = 0
     
     for ep in endpoints:
-        summary_file = f"results/k6-summary-{ep.get('name', 'unknown')}.json"
+        summary_file = f"results/details/k6-summary-{ep.get('name', 'unknown')}.json"
         if not os.path.exists(summary_file):
             continue
         with open(summary_file, "r", encoding="utf-8") as f:
@@ -307,6 +307,10 @@ def upload_zip_file(zip_file, config):
 def main():
     if not os.path.exists("results"):
         os.makedirs("results", exist_ok=True)
+    # 确保 details 子目录存在
+    details_dir = os.path.join("results", "details")
+    if not os.path.exists(details_dir):
+        os.makedirs(details_dir, exist_ok=True)
     
     config = load_config()
     global_config = config.get("global", {})

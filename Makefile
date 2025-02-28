@@ -17,12 +17,12 @@ build:
 init:
 	@if [ ! -f config.yaml ]; then \
 		envsubst < config.yaml.tmpl > config.yaml && \
-		echo "配置文件已通过环境变量渲染完成，如需修改请设置对应环境变量或直接编辑 config.yaml"; \
+		echo "配置文件 config.yaml 已生成。您可以直接编辑该文件或通过设置环境变量来自定义配置。"; \
 	else \
-		echo "配置文件 config.yaml 已存在，跳过初始化"; \
+		echo "检测到配置文件 config.yaml 已存在，初始化步骤已跳过。"; \
 	fi
 	@pip install -r requirements.txt
-	@echo "Python依赖已安装完成"
+	@echo "Python 依赖已成功安装。"
 
 clean:
 	@rm -rf results

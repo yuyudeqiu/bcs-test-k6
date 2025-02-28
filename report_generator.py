@@ -84,7 +84,7 @@ def save_results_to_html(final_results, file_path, global_config, global_vars, t
         for key in keys:
             cell_value = result.get(key, 'N/A')
             if key == "endpointName":
-                html_file = f"k6-summary-{cell_value}.html"
+                html_file = f"details/k6-summary-{cell_value}.html"
                 cell_value = f'<a href="{html_file}" target="_blank">{cell_value}</a>'
             results_tab += f"<td>{cell_value}</td>"
         results_tab += "</tr>"
