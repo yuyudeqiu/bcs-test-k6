@@ -2,8 +2,8 @@
 
 import http from "k6/http";
 import { check } from "k6";
-import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
-import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+import { htmlReport } from "./libs/k6-reporter.bundle.js";
+import { textSummary } from "./libs/k6-summary.js";
 
 // 1. 定义 k6 配置选项
 export let options = {

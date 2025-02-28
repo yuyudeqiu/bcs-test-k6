@@ -69,7 +69,12 @@ def save_results_to_html(final_results, file_path, global_config, global_vars, t
           <tr>
     """
     
-    keys = list(final_results[0].keys()) if final_results else []
+    keys = [
+        "endpointName", "vus", "testDuration", "qps",
+        "totalRequests", "successCount", "failCount", "successRate",
+        "avgDuration", "p90Duration", "p95Duration", "maxDuration",
+        "dataReceived", "dataSent", "path"
+    ] if final_results else []
     for key in keys:
         results_tab += f"<th>{key}</th>"
     results_tab += "</tr></thead><tbody>"

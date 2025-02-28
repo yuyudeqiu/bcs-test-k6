@@ -247,6 +247,7 @@ def gather_results_and_print_report(endpoints, global_config, global_vars, test_
             "maxDuration": f"{metrics['http_req_duration']['values']['max']:.2f}",
             "dataReceived": format_bytes(metrics['data_received']['values']['count']),
             "dataSent": format_bytes(metrics['data_sent']['values']['count']),
+            "path": ep.get("path", "N/A")
         })
         
         # 累加总数据
